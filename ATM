@@ -1,0 +1,69 @@
+import java.util.Scanner;
+
+public class ATM {
+    public static void main(String[] args) {
+        // Initialize account balance, PIN, and other details
+        double balance = 1000.0;  // Default balance
+        int pin = 1234;          // Default PIN
+        boolean exit = false;    // To manage exit option
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Welcome to the ATM!");
+
+        // Authenticate user
+        System.out.print("Enter your PIN: ");
+        int enteredPin = scanner.nextInt();
+
+        if (enteredPin == pin) {
+            while (!exit) {
+                // Display menu
+                System.out.println("\n--- ATM Menu ---");
+                System.out.println("1. Check Balance");
+                System.out.println("2. Withdraw Cash");
+                System.out.println("3. Deposit Cash");
+                System.out.println("4. Exit");
+                System.out.print("Choose an option: ");
+
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1: // Check balance
+                        System.out.printf("Your current balance is: %.2f%n", balance);
+                        break;
+                    case 2: // Withdraw cash
+                        System.out.print("Enter the amount to withdraw: ");
+                        double withdrawAmount = scanner.nextDouble();
+                        if (withdrawAmount > balance) {
+                            System.out.println("Insufficient balance!");
+                        } else if (withdrawAmount <= 0) {
+                            System.out.println("Enter a valid amount!");
+                        } else {
+                            balance -= withdrawAmount;
+                            System.out.printf("You have withdrawn %.2f. Your new balance is: %.2f%n", withdrawAmount, balance);
+                        }
+                        break;
+                    case 3: // Deposit cash
+                        System.out.print("Enter the amount to deposit: ");
+                        double depositAmount = scanner.nextDouble();
+                        if (depositAmount <= 0) {
+                            System.out.println("Enter a valid amount!");
+                        } else {
+                            balance += depositAmount;
+                            System.out.printf("You have deposited %.2f. Your new balance is: %.2f%n", depositAmount, balance);
+                        }
+                        break;
+                    case 4: // Exit
+                        System.out.println("Thank you for using the ATM. Goodbye!");
+                        exit = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+            }
+        } else {
+            System.out.println("Incorrect PIN. Access denied.");
+        }
+
+        scanner.close();
+    }
+}
